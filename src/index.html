@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="InterestCalculatorApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Interest Calculator</title>
+
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <!--From http://openexchangerates.github.io/accounting.js/-->
+    <script src="accounting.js"></script>
+
+    <link rel="stylesheet" href="app.css"/>
+</head>
+
+<body ng-controller="InterestCalculatorCtrl">
+<h1>Interest Calculator</h1>
+
+<form>
+    <label>Starting Balance: <input type="number" ng-model="initialBalance" ng-change="updateVals()" /> </label>
+    <label>Annual Percentage Rate: <input type="number" ng-model="apr" ng-change="updateVals()"/> </label>
+    <label>Payments/Year: <input type="number" ng-model="paymentsPerYear" ng-change="updateVals()"/> </label>
+    <label>Years: <input type="number" ng-model="years" ng-change="updateVals()"/> </label>
+</form>
+
+<p>Starting Balance: {{initialBalanceStr}}</p>
+<p>Total Payments: {{totalPayments}}</p>
+<p>Effective Interest Rate: {{effectiveInterestRateStr}}%</p>
+<p>Monthly payment: {{monthlyPaymentStr}}</p>
+
+<table>
+    <tr>
+        <th>Payment Number</th>
+        <th>Starting Principle</th>
+        <th>Interest Payment</th>
+        <th>Principle Payment</th>
+        <th>Ending Principle</th>
+    </tr>
+    <tr ng-repeat="row in resultTable">
+        <td>{{row.num}}</td>
+        <td>{{row.startingPrinciple}}</td>
+        <td>{{row.interest}}</td>
+        <td>{{row.principle}}</td>
+        <td>{{row.remainingPrinciple}}</td>
+    </tr>
+</table>
+
+
+</body>
+</html>
