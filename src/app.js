@@ -21,13 +21,14 @@ angular
             for (var x = 1; x <= periods; x++) {
                 var interest = balance * eir;
                 var principle = monthlyPayment - interest;
+                var startingPrinciple = balance;
                 var remainingPrinciple = balance - principle;
                 balance = remainingPrinciple;
 
                 var paymentRes = {};
                 paymentRes.num = x;
-                paymentRes.startingPrinciple = accounting.formatMoney(balance);
-                paymentRes.interest = interest.toFixed(2);
+                paymentRes.startingPrinciple = accounting.formatMoney(startingPrinciple);
+                paymentRes.interest = accounting.formatMoney(interest);
                 paymentRes.principle = accounting.formatMoney(principle);
                 paymentRes.remainingPrinciple = accounting.formatMoney(remainingPrinciple);
                 $scope.resultTable.push(paymentRes);
