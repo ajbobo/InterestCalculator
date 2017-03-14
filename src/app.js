@@ -1,6 +1,14 @@
 angular
     .module('InterestCalculatorApp', [])
     .controller('InterestCalculatorCtrl', function InterestCalculatorCtrl($scope) {
+        $scope.formatMoney = function(value) {
+            return accounting.formatMoney(value);
+        };
+
+        $scope.formatFixed = function(value, decimals) {
+            return value.toFixed(decimals);
+        };
+
         $scope.updateVals = function() {
             // Calculate single values
             var totalPayments = $scope.paymentsPerYear * $scope.years;
@@ -11,36 +19,31 @@ angular
             var monthlyPayment = balance * (eir / (1 - Math.pow(1 + eir,-periods)));
 
             // Format values for output
-            $scope.initialBalanceStr = accounting.formatMoney($scope.initialBalance);
-            $scope.effectiveInterestRateStr = ($scope.apr / $scope.paymentsPerYear).toFixed(2);
+            $scope.effectiveInterestRate = $scope.apr / $scope.paymentsPerYear;
             $scope.totalPayments = totalPayments;
-            $scope.monthlyPaymentStr = accounting.formatMoney(monthlyPayment);
+            $scope.monthlyPayment = monthlyPayment;
 
             // Calculate payment table
-            var totalPrinciple = 0;
-            var totalInterest = 0;
+            $scope.totalPrinciple = 0;
+            $scope.totalInterest = 0;
             $scope.resultTable = [];
             for (var x = 1; x <= periods; x++) {
                 var interest = balance * eir;
-                totalInterest += interest;
+                $scope.totalInterest += interest;
                 var principle = monthlyPayment - interest;
-                totalPrinciple += principle;
+                $scope.totalPrinciple += principle;
                 var startingPrinciple = balance;
                 var remainingPrinciple = balance - principle;
                 balance = remainingPrinciple;
 
                 var paymentRes = {};
                 paymentRes.num = x;
-                paymentRes.startingPrinciple = accounting.formatMoney(startingPrinciple);
-                paymentRes.interest = accounting.formatMoney(interest);
-                paymentRes.principle = accounting.formatMoney(principle);
-                paymentRes.remainingPrinciple = accounting.formatMoney(remainingPrinciple);
+                paymentRes.startingPrinciple = startingPrinciple;
+                paymentRes.interest = interest;
+                paymentRes.principle = principle;
+                paymentRes.remainingPrinciple = remainingPrinciple;
                 $scope.resultTable.push(paymentRes);
             }
-
-            $scope.totalPrincipleStr = accounting.formatMoney(totalPrinciple);
-            $scope.totalInterestStr = accounting.formatMoney(totalInterest);
-            $scope.totalPaidStr = accounting.formatMoney(totalPrinciple + totalInterest);
         };
 
         $scope.initialBalance = 1000;

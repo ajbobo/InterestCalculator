@@ -22,13 +22,13 @@
     <label>Years: <input type="number" ng-model="years" ng-change="updateVals()"/> </label>
 </form>
 
-<p>Starting Balance: {{initialBalanceStr}}</p>
+<p>Starting Balance: {{formatMoney(initialBalance)}}</p>
 <p>Total Payments: {{totalPayments}}</p>
-<p>Effective Interest Rate: {{effectiveInterestRateStr}}%</p>
-<p>Monthly payment: {{monthlyPaymentStr}}</p>
-<p>Total Principle: {{totalPrincipleStr}}</p>
-<p>Total Interest: {{totalInterestStr}}</p>
-<p>Total Paid: {{totalPaidStr}}</p>
+<p>Effective Interest Rate: {{formatFixed(effectiveInterestRate,2)}}%</p>
+<p>Monthly payment: {{formatMoney(monthlyPayment)}}</p>
+<p>Total Principle: {{formatMoney(totalPrinciple)}}</p>
+<p>Total Interest: {{formatMoney(totalInterest)}}</p>
+<p>Total Paid: {{formatMoney(totalPrinciple + totalInterest)}}</p>
 
 <table>
     <tr>
@@ -40,10 +40,10 @@
     </tr>
     <tr ng-repeat="row in resultTable">
         <td>{{row.num}}</td>
-        <td>{{row.startingPrinciple}}</td>
-        <td>{{row.interest}}</td>
-        <td>{{row.principle}}</td>
-        <td>{{row.remainingPrinciple}}</td>
+        <td>{{formatMoney(row.startingPrinciple)}}</td>
+        <td>{{formatMoney(row.interest)}}</td>
+        <td>{{formatMoney(row.principle)}}</td>
+        <td>{{formatMoney(row.remainingPrinciple)}}</td>
     </tr>
 </table>
 
