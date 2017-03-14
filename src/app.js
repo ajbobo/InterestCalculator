@@ -17,10 +17,14 @@ angular
             $scope.monthlyPaymentStr = accounting.formatMoney(monthlyPayment);
 
             // Calculate payment table
+            var totalPrinciple = 0;
+            var totalInterest = 0;
             $scope.resultTable = [];
             for (var x = 1; x <= periods; x++) {
                 var interest = balance * eir;
+                totalInterest += interest;
                 var principle = monthlyPayment - interest;
+                totalPrinciple += principle;
                 var startingPrinciple = balance;
                 var remainingPrinciple = balance - principle;
                 balance = remainingPrinciple;
@@ -33,6 +37,10 @@ angular
                 paymentRes.remainingPrinciple = accounting.formatMoney(remainingPrinciple);
                 $scope.resultTable.push(paymentRes);
             }
+
+            $scope.totalPrincipleStr = accounting.formatMoney(totalPrinciple);
+            $scope.totalInterestStr = accounting.formatMoney(totalInterest);
+            $scope.totalPaidStr = accounting.formatMoney(totalPrinciple + totalInterest);
         };
 
         $scope.initialBalance = 1000;
