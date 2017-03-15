@@ -1,13 +1,6 @@
 angular
     .module('InterestCalculatorApp', [])
     .controller('InterestCalculatorCtrl', function InterestCalculatorCtrl($scope) {
-        $scope.formatMoney = function(value) {
-            return accounting.formatMoney(value);
-        };
-
-        $scope.formatFixed = function(value, decimals) {
-            return value.toFixed(decimals);
-        };
 
         $scope.updateVals = function() {
             // Calculate single values

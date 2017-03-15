@@ -6,8 +6,6 @@
 
     <script src="angular.min.js"></script>
     <script src="app.js"></script>
-    <!--From http://openexchangerates.github.io/accounting.js/-->
-    <script src="accounting.js"></script>
 
     <link rel="stylesheet" href="app.css"/>
 </head>
@@ -22,13 +20,13 @@
     <label>Years: <input type="number" ng-model="years" ng-change="updateVals()"/> </label>
 </form>
 
-<p>Starting Balance: {{formatMoney(initialBalance)}}</p>
+<p>Starting Balance: {{initialBalance | currency}}</p>
 <p>Total Payments: {{totalPayments}}</p>
-<p>Effective Interest Rate: {{formatFixed(effectiveInterestRate,2)}}%</p>
-<p>Monthly payment: {{formatMoney(monthlyPayment)}}</p>
-<p>Total Principle: {{formatMoney(totalPrinciple)}}</p>
-<p>Total Interest: {{formatMoney(totalInterest)}}</p>
-<p>Total Paid: {{formatMoney(totalPrinciple + totalInterest)}}</p>
+<p>Effective Interest Rate: {{effectiveInterestRate | number:2}}%</p>
+<p>Monthly payment: {{monthlyPayment | currency}}</p>
+<p>Total Principle: {{totalPrinciple | currency}}</p>
+<p>Total Interest: {{totalInterest | currency}}</p>
+<p>Total Paid: {{(totalPrinciple + totalInterest) | currency}}</p>
 
 <table>
     <tr>
@@ -40,10 +38,10 @@
     </tr>
     <tr ng-repeat="row in resultTable">
         <td>{{row.num}}</td>
-        <td>{{formatMoney(row.startingPrinciple)}}</td>
-        <td>{{formatMoney(row.interest)}}</td>
-        <td>{{formatMoney(row.principle)}}</td>
-        <td>{{formatMoney(row.remainingPrinciple)}}</td>
+        <td>{{row.startingPrinciple | currency}}</td>
+        <td>{{row.interest | currency}}</td>
+        <td>{{row.principle | currency}}</td>
+        <td>{{row.remainingPrinciple | currency}}</td>
     </tr>
 </table>
 
